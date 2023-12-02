@@ -1,29 +1,23 @@
-"""
-Django command to wait for the database to be available.
-"""
 import time
-
-from sqlite3 import OperationalError as sqlite3OpError
-
+from sqlite3 import OperationalError as Sqlite3OperationalError
 from django.db.utils import OperationalError
 from django.core.management.base import BaseCommand
-from django.conf import settings # noqa
-
 
 
 class Command(BaseCommand):
-    """Django command to wait for database."""
+    """Django command to wait for the database."""
 
     def handle(self, *args, **options):
-        """Entrypoint for command."""
-        self.stdout.write('Waiting for database...')
+        """Entrypoint for the command."""
+        self.stdout.write('Waiting for the database...')
         db_up = False
         while db_up is False:
             try:
                 self.check(databases=['default'])
                 db_up = True
-            except (sqlite3OpError, OperationalError):
+            except (Sqlite3OperationalError, OperationalError):
                 self.stdout.write('Database unavailable, waiting 1 second...')
                 time.sleep(1)
 
         self.stdout.write(self.style.SUCCESS('Database available!'))
+        
