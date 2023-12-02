@@ -16,7 +16,9 @@ class CommandTest(SimpleTestCase):
 
     @patch('time.sleep')
     def test_wait_for_db(self, patched_sleep, patched_check):
-        patched_check.side_effect = [Sqlite3OperationalError] * 2 + [OperationalError] * 3 + [True]
+        patched_check.side_effect = [
+            Sqlite3OperationalError
+        ] * 2 + [OperationalError] * 3 + [True]
         call_command('wait_for_db')
         self.assertEqual(patched_check.call_count, 6)
         patched_check.assert_called_with(databases=['default'])
