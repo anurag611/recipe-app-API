@@ -34,7 +34,7 @@ class ModelTests(TestCase):
         ]
         for email, excepted in sample_emails:
             user = get_user_model().objects.create_user(email, 'test123')
-            self.assertEqual(user.email,excepted)
+            self.assertEqual(user.email, excepted)
 
     def test_new_user_without_email_raises_error(self):
         """test that creating user without email raises error"""
