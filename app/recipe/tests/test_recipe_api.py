@@ -82,7 +82,7 @@ class PrivateRecipeApiTests(TestCase):
     def test_recipe_list_limited_to_user(self):
         """Test list of recipes is limited to authenticated user."""
         other_user = create_user(
-            email='other@example.com', 
+            email='other@example.com',
             password='password123')
         create_recipe(user=other_user)
         create_recipe(user=self.user)
@@ -135,7 +135,7 @@ class PrivateRecipeApiTests(TestCase):
         res = self.client.patch(url, payload)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        recipe.refresh_from_db()  
+        recipe.refresh_from_db()
         self.assertEqual(recipe.title, payload['title'])
         self.assertEqual(recipe.link, originallink)
         self.assertEqual(recipe.user, self.user)
@@ -150,7 +150,7 @@ class PrivateRecipeApiTests(TestCase):
         payload = {
             'title': 'new recipe title',
             'time_minutes': 30,
-            'price': Decimal('5.00'),     
+            'price': Decimal('5.00'),
         }
         url = detail_url(recipe.id)
         res = self.client.put(url, payload)
@@ -160,11 +160,11 @@ class PrivateRecipeApiTests(TestCase):
         for k, v in payload.items():
             self.assertEqual(v, getattr(recipe, k))
         self.assertEqual(recipe.user, self.user)
-    
+
     def test_update_user_returns_error(self):
         """Test updating recipe with other user returns error."""
         other_user = create_user(
-            email='test2@example.com', 
+            email='test2@example.com',
             password='testpass')
         recipe = create_recipe(user=self.user)
 
@@ -187,10 +187,10 @@ class PrivateRecipeApiTests(TestCase):
     def test_delete_user_returns_error(self):
         """Test deleting recipe with other user returns error."""
         other_user = create_user(
-            email='user2@example.com', 
+            email='user2@example.com',
             password='testpass')
         recipe = create_recipe(user=other_user)
-    
+
         url = detail_url(recipe.id)
         res = self.client.delete(url)
 
@@ -308,7 +308,7 @@ class PrivateRecipeApiTests(TestCase):
     def test_create_recipe_with_existing_ingredients(self):
         """Test creating a recipe with existing ingredients."""
         ingredient = Ingredient.objects.create(
-            user=self.user, 
+            user=self.user,
             name='Chocolate')
         payload = {
             'title': 'Chocolate cheesecake',
@@ -346,12 +346,14 @@ class PrivateRecipeApiTests(TestCase):
     def test_update_recipe_assign_ingredient(self):
         """Test assigning an existing ingredient when updating a recipe."""
         ingredient_chocolate = Ingredient.objects.create(
-            user=self.user, 
+            user=self.user,
             name='Chocolate')
         recipe = create_recipe(user=self.user)
         recipe.ingredients.add(ingredient_chocolate)
 
-        ingredient_cheese = Ingredient.objects.create(user=self.user, name='Cheese')
+        ingredient_cheese = Ingredient.objects.create(
+            user=self.user,
+            name='Cheese')
         payload = {'ingredients': [{'name': 'Cheese'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
@@ -363,7 +365,7 @@ class PrivateRecipeApiTests(TestCase):
     def test_clear_recipe_ingredients(self):
         """Test clearing a recipes ingredients."""
         ingredient = Ingredient.objects.create(
-            user=self.user, 
+            user=self.user,
             name='Chocolate')
         recipe = create_recipe(user=self.user)
         recipe.ingredients.add(ingredient)
