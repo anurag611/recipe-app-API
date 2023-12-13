@@ -32,9 +32,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
-                 mixins.UpdateModelMixin,
-                 mixins.ListModelMixin,
-                 viewsets.GenericViewSet):
+                            mixins.UpdateModelMixin,
+                            mixins.ListModelMixin,
+                            viewsets.GenericViewSet):
     """base class for managing recipe attributes APIs"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)

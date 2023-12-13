@@ -75,7 +75,7 @@ class Tag(models.Model):
     def __str__(self):
         """Return string representation of the model."""
         return self.name
-    
+
 
 class Ingredient(models.Model):
     """Ingredient to be used in a recipe."""
