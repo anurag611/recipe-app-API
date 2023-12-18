@@ -32,7 +32,6 @@ from recipe import serializers
     )
 )
 
-
 class RecipeViewSet(viewsets.ModelViewSet):
     """class for managing recipe APIs"""
     serializer_class = serializers.RecipeDetailSerializer
@@ -83,7 +82,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     )
 )
 
-
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
                             mixins.ListModelMixin,
@@ -104,6 +102,7 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
         return queryset.filter(
             user=self.request.user
         ).order_by('-name').distinct()
+
 
 class TagViewSet(BaseRecipeAttrViewSet):
     """class for managing tags APIs"""
