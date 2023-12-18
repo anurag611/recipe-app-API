@@ -31,7 +31,6 @@ from recipe import serializers
         ]
     )
 )
-
 class RecipeViewSet(viewsets.ModelViewSet):
     """class for managing recipe APIs"""
     serializer_class = serializers.RecipeDetailSerializer
@@ -81,7 +80,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
         ]
     )
 )
-
 class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
                             mixins.UpdateModelMixin,
                             mixins.ListModelMixin,
